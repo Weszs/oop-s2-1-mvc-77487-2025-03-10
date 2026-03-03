@@ -1,4 +1,4 @@
-﻿namespace TestProject
+﻿namespace Library.Tests
 {
     public class UnitTest1
     {
@@ -6,7 +6,7 @@
         public void ThisTestShouldPass()
         {
             string name = "John";
-            Assert.Equal("John", name)
+            Assert.Equal("John", name);
         }
     }
 }
