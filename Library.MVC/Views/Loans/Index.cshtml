@@ -1,0 +1,64 @@
+@model IEnumerable<Library_Domain.Loan>
+@{
+    ViewData["Title"] = "Loans";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Loans</h2>
+        <a asp-controller="Loans" asp-action="Create" class="btn btn-primary">+ Create New Loan</a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Book</th>
+                        <th>Member</th>
+                        <th>Loan Date</th>
+                        <th>Due Date</th>
+                        <th>Returned Date</th>
+                        <th>Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var l in Model)
+                    {
+                        <tr>
+                            <td>@l.Book?.Title</td>
+                            <td>@l.Member?.FullName</td>
+                            <td>@l.LoanDate.ToShortDateString()</td>
+                            <td>@l.DueDate.ToShortDateString()</td>
+                            <td>@(l.ReturnedDate.HasValue ? l.ReturnedDate.Value.ToShortDateString() : "-")</td>
+                            <td>
+                                @if (l.ReturnedDate.HasValue)
+                                {
+                                    <span class="badge bg-success">Returned</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Active</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (!l.ReturnedDate.HasValue)
+                                {
+                                    <form method="post" asp-controller="Loans" asp-action="Return" asp-route-id="@l.Id" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-success">Mark Returned</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">No loans found.</div>
+    }
+</div>

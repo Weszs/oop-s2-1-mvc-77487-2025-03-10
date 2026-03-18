@@ -1,0 +1,32 @@
+@model Library_Domain.Book
+@{
+    ViewData["Title"] = "Delete Book";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Delete Book</h2>
+
+            <div class="alert alert-danger mt-4" role="alert">
+                <strong>Warning!</strong> Are you sure you want to delete this book?
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Title</h5>
+                    <p><strong>Author:</strong> @Model.Author</p>
+                    <p><strong>ISBN:</strong> @Model.Isbn</p>
+                    <p><strong>Category:</strong> @Model.Category</p>
+                    <p><strong>Available:</strong> @(Model.IsAvailable ? "Yes" : "No")</p>
+                </div>
+            </div>
+
+            <form asp-controller="Books" asp-action="Delete" method="post" class="mt-4">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a asp-controller="Books" asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

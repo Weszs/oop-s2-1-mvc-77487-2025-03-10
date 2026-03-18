@@ -1,6 +1,6 @@
 ﻿namespace Library_Domain
 {
-    public class Class1
+    public class Product
     {
 
     }
